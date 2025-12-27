@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { createClient } from '@supabase/supabase-js';
+import DeletePostButton from '../../components/DeletePostButton';
 
 interface BlogPost {
   slug: string;
@@ -85,18 +86,7 @@ export default async function BlogPage() {
                 </div>
               </Link>
               <div className="p-4 border-t flex justify-end gap-2">
-                <button
-                  onClick={async () => {
-                    if (!confirm('Delete this post?')) return;
-                    const auth = typeof window !== 'undefined' && localStorage.getItem('adminAuth');
-                    if (!auth) { alert('Admin only'); return; }
-                    await fetch('/api/admin/delete-blog', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slug: post.slug }) });
-                    location.reload();
-                  }}
-                  className="text-sm text-red-600"
-                >
-                  Delete
-                </button>
+                <DeletePostButton slug={post.slug} />
               </div>
             </article>
           ))}

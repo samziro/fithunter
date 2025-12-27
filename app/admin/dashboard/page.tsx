@@ -4,7 +4,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import AuthGuard from '../../../components/AuthGuard';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
@@ -37,7 +36,7 @@ export default function AdminBookingsPage() {
   const [sendingNotificationId, setSendingNotificationId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const router = useRouter();
+  // const router = useRouter();
 
   // send notification (opens app/link) then mark booking as notified on server
   const sendNotification = async (booking: Booking, channel: 'whatsapp' | 'sms') => {
@@ -110,50 +109,42 @@ export default function AdminBookingsPage() {
   }, []);
 
   // Update booking status in Supabase
-  const updateBookingStatus = async (bookingId: string, newStatus: 'pending' | 'confirmed' | 'completed') => {
-    setError('');
-    try {
-      const body = { bookingId, newStatus };
+  // const updateBookingStatus = async (bookingId: string, newStatus: 'pending' | 'confirmed' | 'completed') => {
+  //   setError('');
+  //   try {
+  //     const body = { bookingId, newStatus };
 
-      const res = await fetch('/api/admin/update-booking', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify(body),
-      });
+  //     const res = await fetch('/api/admin/update-booking', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       credentials: 'include',
+  //       body: JSON.stringify(body),
+  //     });
 
-      if (!res.ok) {
-        const txt = await res.text().catch(() => '');
-        console.error('update-booking response status', res.status, 'text:', txt);
-        const json = (() => { try { return JSON.parse(txt || '{}'); } catch { return {}; } })();
-        setError(json?.message || `Update failed (status ${res.status})`);
-        return;
-      }
+  //     if (!res.ok) {
+  //       const txt = await res.text().catch(() => '');
+  //       console.error('update-booking response status', res.status, 'text:', txt);
+  //       const json = (() => { try { return JSON.parse(txt || '{}'); } catch { return {}; } })();
+  //       setError(json?.message || `Update failed (status ${res.status})`);
+  //       return;
+  //     }
 
-      const json = await res.json();
-      if (!json?.ok) {
-        console.error('updateBookingStatus failed:', json);
-        setError(json?.message || 'Failed to update booking.');
-        return;
-      }
+  //     const json = await res.json();
+  //     if (!json?.ok) {
+  //       console.error('updateBookingStatus failed:', json);
+  //       setError(json?.message || 'Failed to update booking.');
+  //       return;
+  //     }
 
-      const updated = json.booking;
-      setBookings((prev) => prev.map((o) => (o.id === updated.id ? { ...o, ...updated } : o)));
-    } catch (err) {
-      console.error('updateBookingStatus error', err);
-      setError('Failed to update booking.');
-    }
-  };
+  //     const updated = json.booking;
+  //     setBookings((prev) => prev.map((o) => (o.id === updated.id ? { ...o, ...updated } : o)));
+  //   } catch (err) {
+  //     console.error('updateBookingStatus error', err);
+  //     setError('Failed to update booking.');
+  //   }
+  // };
 
-  const handleLogout = async () => {
-    try {
-      await fetch('/api/admin/logout', { method: 'POST', credentials: 'include' });
-    } catch (e) {
-      console.error(e);
-    } finally {
-      router.push('/admin/login');
-    }
-  };
+  
 
   const formatPhoneForWhatsApp = (phone: string) => {
     let cleaned = String(phone).replace(/[\s-]/g, '');
@@ -197,22 +188,22 @@ export default function AdminBookingsPage() {
   const totalRevenue = bookings.reduce((sum, booking) => sum + booking.totalAmount, 0);
 
   return (
-    <AuthGuard>
-      <div className="min-h-dvh bg-gray-50 py-8">
+    
+      <div className="min-h-dvh bg-[#4a4a4a] py-8">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:justify-between md:items-center mb-8">
             <div>
-              <h1 className="text-xl md:text-3xl md:text-center font-bold text-gray-900">Booking Management</h1>
-              <p className="text-gray-600 mt-2">Manage and track all client bookings - Updates in real-time</p>
+              <h1 className="text-xl md:text-3xl md:text-center font-bold text-white">Booking Management</h1>
+              <p className="text-slate-100 my-4">Manage and track all client bookings - Updates in real-time</p>
             </div>
             <div className="flex flex-row space-x-4">
               <Link
                 href="/"
-                className="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition-colors whitespace-nowrap cursor-pointer"
+                className="bg-yellow-600 text-white px-6 py-3  hover:bg-yellow-700 transition-colors whitespace-nowrap cursor-pointer"
               >
                 Back to Website
               </Link>
-              <button
+              {/* <button
                 onClick={handleLogout}
                 className="bg-red-600 text-white px-6 py-3 rounded-xl hover:bg-red-700 transition-colors whitespace-nowrap cursor-pointer"
               >
@@ -220,56 +211,56 @@ export default function AdminBookingsPage() {
                   <i className="ri-logout-box-line"></i>
                   <span>Logout</span>
                 </div>
-              </button>
+              </button> */}
             </div>
           </div>
 
           {/* Statistics Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white rounded-2xl shadow-lg p-6">
+            <div className="bg-yellow-600/20 backdrop-blur-sm border-2 border-yellow-400/30 shadow-lg p-6">
               <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                  <i className="ri-calendar-check-line text-blue-600 text-xl"></i>
+                <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+                  <i className="ri-calendar-check-line text-yellow-600 text-xl"></i>
                 </div>
                 <div>
-                  <p className="text-gray-600 text-sm">Total Bookings</p>
-                  <p className="text-2xl font-bold text-gray-900">{totalBookings}</p>
+                  <p className="text-yellow-500 text-sm">Total Clients</p>
+                  <p className="text-2xl font-bold text-yellow-500">{totalBookings}</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-lg p-6">
+            <div className="bg-yellow-600/20 backdrop-blur-sm border-2 border-yellow-400/30 shadow-lg p-6">
               <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
+                <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
                   <i className="ri-time-line text-yellow-600 text-xl"></i>
                 </div>
                 <div>
-                  <p className="text-gray-600 text-sm">Pending</p>
-                  <p className="text-2xl font-bold text-gray-900">{pendingBookings}</p>
+                  <p className="text-yellow-500 text-sm">Registered and not paid</p>
+                  <p className="text-2xl font-bold text-yellow-500">{pendingBookings}</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-lg p-6">
+            <div className="bg-yellow-600/20 backdrop-blur-sm border-2 border-yellow-400/30 shadow-lg p-6">
               <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
                   <i className="ri-checkbox-circle-line text-blue-600 text-xl"></i>
                 </div>
                 <div>
-                  <p className="text-gray-600 text-sm">Confirmed</p>
-                  <p className="text-2xl font-bold text-gray-900">{confirmedBookings}</p>
+                  <p className="text-yellow-500 text-sm">Registered and paid Clients</p>
+                  <p className="text-2xl font-bold text-yellow-500">{confirmedBookings}</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-lg p-6">
+            <div className="bg-yellow-600/20 backdrop-blur-sm border-2 border-yellow-400/30 shadow-lg p-6">
               <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
                   <i className="ri-money-dollar-circle-line text-green-600 text-xl"></i>
                 </div>
                 <div>
-                  <p className="text-gray-600 text-sm">Revenue</p>
-                  <p className="text-2xl font-bold text-gray-900">KES {totalRevenue.toLocaleString()}</p>
+                  <p className="text-yellow-500 text-sm">Revenue</p>
+                  <p className="text-2xl font-bold text-yellow-500">KES {totalRevenue.toLocaleString()}</p>
                 </div>
               </div>
             </div>
@@ -395,7 +386,7 @@ export default function AdminBookingsPage() {
 
                     <div className="flex flex-col space-y-3 lg:w-48">
                       {/* Status Update */}
-                      <select
+                      {/* <select
                         value={booking.status}
                         onChange={(e) => updateBookingStatus(booking.id, e.target.value as any)}
                         className="px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent cursor-pointer pr-8"
@@ -403,7 +394,7 @@ export default function AdminBookingsPage() {
                         <option value="pending">Pending</option>
                         <option value="confirmed">Confirmed</option>
                         <option value="completed">Completed</option>
-                      </select>
+                      </select> */}
 
                       {/* Notify Client Buttons */}
                       <div className="flex space-x-2">
@@ -454,6 +445,6 @@ export default function AdminBookingsPage() {
           </div>
         </div>
       </div>
-    </AuthGuard>
+    
   );
 }

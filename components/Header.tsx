@@ -1,22 +1,17 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import AdminModal from './AdminModal';
+import ClientModal from './ClientModal';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isClientModalOpen, setIsClientModalOpen] = useState(false);
 
-  useEffect(() => {
-    try {
-      setIsAdmin(Boolean(localStorage.getItem('adminAuth')));
-    } catch (e) {
-      setIsAdmin(false);
-    }
-  }, []);
+  
 
   return (
     <header className="bg-[#4a4a4a] shadow-lg z-10 w-full fixed">
@@ -56,28 +51,10 @@ export default function Header() {
             <button onClick={() => setIsAdminOpen(true)} className="text-white transition-colors cursor-pointer">
               Admin
             </button>
-            {isAdmin && (
-              <>
-                <Link href="/admin/orders" className="text-white transition-colors cursor-pointer">
-                  Dashboard
-                </Link>
-                {/* <button
-                  onClick={async () => {
-                    // call logout API
-                    await fetch('/api/admin/logout', { method: 'POST' });
-                    try { localStorage.removeItem('adminAuth'); localStorage.removeItem('adminName'); } catch (e) {}
-                    setIsAdmin(false);
-                    window.location.href = '/';
-                  }}
-                  className="text-white transition-colors cursor-pointer"
-                >
-                  Logout
-                </button> */}
-              </>
-            )}
-            <Link href="/login" className="bg-yellow-500 text-white px-6 py-3 hover:bg-yellow-700 transition-colors whitespace-nowrap cursor-pointer">
+            
+            <button onClick={() =>  setIsClientModalOpen(true)} className="bg-yellow-500 text-white px-6 py-3 hover:bg-yellow-700 transition-colors whitespace-nowrap cursor-pointer">
               Get Started
-            </Link>
+            </button>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -102,16 +79,20 @@ export default function Header() {
               <Link href="/programs" className="text-white transition-colors cursor-pointer">
                 Programs
               </Link>
-              <Link href="/book" className="text-white transition-colors cursor-pointer">
-                Book Session
+              <Link href="/blogs" className="text-white transition-colors cursor-pointer">
+                Blogs
               </Link>
-              <Link href="/login" className="bg-yellow-600 text-white px-6 py-3 hover:bg-yellow-700 transition-colors text-center whitespace-nowrap cursor-pointer">
+              <button onClick={() => setIsAdminOpen(true)} className="text-white transition-colors cursor-pointer">
+              Admin
+            </button>
+              <button onClick={() =>  setIsClientModalOpen(true)} className="bg-yellow-600 text-white px-6 py-3 hover:bg-yellow-700 transition-colors text-center whitespace-nowrap cursor-pointer">
                 Get Started
-              </Link>
+              </button>
             </div>
           </div>
         )}
         <AdminModal open={isAdminOpen} onClose={() => setIsAdminOpen(false)} />
+        <ClientModal open={isClientModalOpen} onClose={() => setIsClientModalOpen(false)} />
       </div>
     </header>
   );

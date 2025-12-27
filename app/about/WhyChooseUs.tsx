@@ -34,14 +34,14 @@ export default function WhyChooseUs() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <div key={index} className="bg-[#292929] p-8 shadow-lg hover:shadow-xl transition-shadow">
+            <div key={index} className="bg-[#292929] flex flex-col items-center justify-center p-8 shadow-lg hover:shadow-xl transition-shadow">
               <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-6">
                 <i className={`${feature.icon} text-2xl text-yellow-600`}></i>
               </div>
               <h3 className="text-xl font-semibold text-white mb-4">
                 {feature.title}
               </h3>
-              <p className="text-slate-100 leading-relaxed">
+              <p className="text-slate-100 leading-relaxed text-center">
                 {feature.description}
               </p>
             </div>

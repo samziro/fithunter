@@ -67,7 +67,7 @@ export default function Home() {
             Expert personal trainer Watamu offering affordable fitness coaching Kenya. Preying on fitness goals with coastal-inspired programs.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <CTAButton href="/book" className="bg-yellow-600 text-white hover:bg-yellow-600">
+            <CTAButton href="/programs" className="bg-yellow-600 text-white hover:bg-yellow-600">
               Book a Session - KES 2000
             </CTAButton>
             <CTAButton href="/programs" className="border-2 border-white text-white hover:bg-white hover:text-gray-900">

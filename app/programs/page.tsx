@@ -1,12 +1,28 @@
 /* eslint-disable react/no-unescaped-entities */
-'use client';
+"use client";
 
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import Image from 'next/image';
+import ClientModal from '@/components/ClientModal';
 
 export default function ProgramPage() {
+  const [isClientModalOpen, setIsClientModalOpen] = useState(false);
+  const router = useRouter();
+
+  const handleBuyClick = () => {
+    try {
+      if (typeof window !== 'undefined' && localStorage.getItem('clientAuth') === 'true') {
+        router.push('/order');
+        return;
+      }
+    } catch (e) {}
+    setIsClientModalOpen(true);
+  };
+
   return (
     <div className="min-h-dvh">
       <Header />
@@ -52,9 +68,9 @@ export default function ProgramPage() {
                   <div className="text-xl font-bold text-yellow-600">
                     KES 2000
                   </div>
-                  <Link href="/book" className="bg-yellow-600 text-white px-6 py-3 font-semibold hover:bg-yellow-700 transition-colors whitespace-nowrap cursor-pointer">
+                  <button onClick={handleBuyClick} className="bg-yellow-600 text-white px-6 py-3 font-semibold hover:bg-yellow-700 transition-colors whitespace-nowrap cursor-pointer">
                     Buy Now
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
@@ -76,9 +92,9 @@ export default function ProgramPage() {
                   <div className="text-xl font-bold text-yellow-600">
                     KES 2000
                   </div>
-                  <Link href="/book" className="bg-yellow-600 text-white px-6 py-3 font-semibold hover:bg-yellow-700 transition-colors whitespace-nowrap cursor-pointer">
+                  <button onClick={handleBuyClick} className="bg-yellow-600 text-white px-6 py-3 font-semibold hover:bg-yellow-700 transition-colors whitespace-nowrap cursor-pointer">
                     Buy Now
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
@@ -100,9 +116,9 @@ export default function ProgramPage() {
                   <div className="text-xl font-bold text-yellow-600">
                     KES 2000
                   </div>
-                  <Link href="/book" className="bg-yellow-600 text-white px-6 py-3 font-semibold hover:bg-yellow-700 transition-colors whitespace-nowrap cursor-pointer">
+                  <button onClick={handleBuyClick} className="bg-yellow-600 text-white px-6 py-3 font-semibold hover:bg-yellow-700 transition-colors whitespace-nowrap cursor-pointer">
                     Buy Now
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
@@ -124,24 +140,26 @@ export default function ProgramPage() {
                   <div className="text-xl font-bold text-yellow-600">
                     KES 2000
                   </div>
-                  <Link href="/book" className="bg-yellow-600 text-white px-6 py-3  font-semibold hover:bg-yellow-700 transition-colors whitespace-nowrap cursor-pointer">
+                  <button onClick={handleBuyClick} className="bg-yellow-600 text-white px-6 py-3  font-semibold hover:bg-yellow-700 transition-colors whitespace-nowrap cursor-pointer">
                     Buy Now
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="text-center mt-12">
+            <div className="text-center mt-12">
             <p className="text-xl text-slate-100 mb-6">
               Unsure which program fits you best? Get a free consultation with our coaching team.
             </p>
-            <Link href="/book" className="bg-yellow-600 text-white px-8 py-4  text-lg font-semibold hover:bg-yellow-700 transition-colors">
+            <button onClick={handleBuyClick} className="bg-yellow-600 text-white px-8 py-4  text-lg font-semibold hover:bg-yellow-700 transition-colors">
               Book a Free Consultation
-            </Link>
+            </button>
           </div>
         </div>
       </section>
+
+      <ClientModal open={isClientModalOpen} onClose={() => setIsClientModalOpen(false)} />
 
       {/* Personal Training Pricing Section */}
       <section className="py-20 bg-[#292929] text-white">
@@ -160,9 +178,9 @@ export default function ProgramPage() {
                 <li>✓ Personalized workout plan</li>
                 <li>✓ Expert guidance</li>
               </ul>
-              <Link href="/book" className="bg-yellow-600 text-white px-6 py-3 font-semibold hover:bg-yellow-700 block">
+              <button onClick={handleBuyClick} className="bg-yellow-600 text-white px-6 py-3 font-semibold hover:bg-yellow-700 block">
                 Book Now
-              </Link>
+              </button>
             </div>
 
             <div className="bg-[#4a4a4a] p-4 text-center">
@@ -173,9 +191,9 @@ export default function ProgramPage() {
                 <li>✓ Save 10%</li>
                 <li>✓ Email support</li>
               </ul>
-              <Link href="/book" className="bg-yellow-600 text-white px-6 py-3 font-semibold hover:bg-yellow-700 block">
-                Book Now
-              </Link>
+              <button onClick={handleBuyClick} className="bg-yellow-600 text-white px-6 py-3 font-semibold hover:bg-yellow-700 block">
+                Choose Plan
+              </button>
             </div>
 
             <div className="bg-gradient-to-b from-yellow-600 to-yellow-700 p-6 text-center shadow-xl">
@@ -187,9 +205,9 @@ export default function ProgramPage() {
                 <li>✓ Save 20%</li>
                 <li>✓ Priority email support</li>
               </ul>
-              <Link href="/book" className="bg-white text-yellow-600 px-6 py-3 font-semibold hover:bg-gray-100 block">
+              <button onClick={handleBuyClick} className="bg-white text-yellow-600 px-6 py-3 font-semibold hover:bg-gray-100 block">
                 Get Started
-              </Link>
+              </button>
             </div>
 
             <div className="bg-[#4a4a4a] p-4 text-center">
@@ -199,10 +217,10 @@ export default function ProgramPage() {
                 <li>✓ 16 training sessions</li>
                 <li>✓ Save 27%</li>
                 <li>✓ Monthly check-ins</li>
+                <button onClick={handleBuyClick} className="bg-yellow-600 text-white px-6 py-3 font-semibold hover:bg-yellow-700 block">
+                  Choose Plan
+                </button>
               </ul>
-              <Link href="/book" className="bg-yellow-600 text-white px-6 py-3  font-semibold hover:bg-yellow-700 block">
-                Choose Plan
-              </Link>
             </div>
 
             <div className="bg-[#4a4a4a] p-4 text-center">
