@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { createClient } from '@supabase/supabase-js';
-import DeletePostButton from '../../components/DeletePostButton';
+
 
 interface BlogPost {
   slug: string;
