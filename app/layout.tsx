@@ -82,7 +82,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${inter.variable} ${poppins.variable} font-inter bg-[#0A0F1E] text-white antialiased`}
+        className={`${inter.variable} ${poppins.variable} font-inter bg-[#4a4a4a] text-white antialiased`}
+        suppressHydrationWarning={true}
       >
         {/* Accessible landmark */}
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-yellow-600 focus:px-4 focus:py-2 focus:rounded-md">

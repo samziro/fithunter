@@ -28,6 +28,8 @@ export default function ProgramPage() {
     setIsClientModalOpen(true);
   };
 
+  
+  
   return (
     <div className="min-h-dvh bg-[#292929]">
       <Header />
