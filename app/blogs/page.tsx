@@ -85,9 +85,7 @@ export default async function BlogPage() {
                   <span className="text-blue-600 font-medium hover:text-blue-700 transition-colors">Read More →</span>
                 </div>
               </Link>
-              <div className="p-4 border-t flex justify-end gap-2">
-                <DeletePostButton slug={post.slug} />
-              </div>
+             
             </article>
           ))}
         </div>
