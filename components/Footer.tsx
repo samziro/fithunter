@@ -41,8 +41,8 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-[#4a4a4a] text-white py-12">
-      <div className="max-w-6xl mx-auto px-6">
+    <footer className="text-textSecondary py-12 bg-bg">
+      <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center mb-4">
@@ -52,9 +52,10 @@ export default function Footer() {
                 width={100}
                 height={100}
                 className="rounded-full"
+                loading="lazy"
               />
             </div>
-            <p className="text-slate-100 text-sm leading-relaxed">
+            <p className="text-textMain text-sm leading-relaxed">
               Fit Hunter is your go-to personal trainer in Watamu, Kenya. I provide tailored fitness sessions—including one-on-one and Online training, to help you reach your health goals simply and effectively.
             </p>
           </div>
@@ -63,22 +64,22 @@ export default function Footer() {
             <h4 className="font-semibold text-lg mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/" className="text-slate-100 hover:text-yellow-500 transition-colors">
+                <Link href="/" className="text-textMain hover:text-button transition-colors">
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-slate-100 hover:text-yellow-500 transition-colors">
+                <Link href="/about" className="text-textMain hover:text-button transition-colors">
                   About
                 </Link>
               </li>
               <li>
-                <Link href="/programs" className="text-slate-100 hover:text-yellow-500 transition-colors">
+                <Link href="/programs" className="text-textMain hover:text-button transition-colors">
                   Programs
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-slate-100 hover:text-yellow-500 transition-colors">
+                <Link href="/contact" className="text-textMain hover:text-button transition-colors">
                   Contact
                 </Link>
               </li>
@@ -89,16 +90,16 @@ export default function Footer() {
             <h4 className="font-semibold text-lg mb-4">Contact Info</h4>
             <div className="space-y-3 text-sm">
               <div className="flex items-center space-x-2">
-                <i className="ri-map-pin-line text-white text-xl"></i>
-                <span className="text-slate-100">Watamu, Kenya</span>
+                <i className="ri-map-pin-line text-textSecondary text-xl"></i>
+                <span className="text-textMain">Watamu, Kenya</span>
               </div>
               <div className="flex items-center space-x-2">
-                <i className="ri-phone-line text-white text-xl"></i>
-                <span className="text-slate-100">+254 748 679 264</span>
+                <i className="ri-phone-line text-textSecondary text-xl"></i>
+                <span className="text-textMain">+254 748 679 264</span>
               </div>
               <div className="flex items-center space-x-2">
-                <i className="ri-time-line text-white text-xl"></i>
-                <span className="text-slate-100">Flexible hours: Morning and evening sessions available</span>
+                <i className="ri-time-line text-textSecondary text-xl"></i>
+                <span className="text-textMain">Flexible hours: Morning and evening sessions available</span>
               </div>
             </div>
           </div>
@@ -112,17 +113,17 @@ export default function Footer() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center hover:text-yellow-500 transition-colors duration-300"
+                  className="flex items-center justify-center hover:text-button transition-colors duration-300"
                   aria-label={link.label}
                 >
-                  <i className={`${link.icon} text-white text-3xl`}></i>
+                  <i className={`${link.icon} text-textSecondary text-3xl`}></i>
                 </a>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="border-t border-[#292929] mt-8 pt-8 text-center text-sm text-slate-100">
+        <div className="border-t border-[#292929] mt-8 pt-8 text-center text-sm text-textMain">
           <p>&copy; {currentYear} Fit Hunter. All rights reserved.</p>
         </div>
       </div>

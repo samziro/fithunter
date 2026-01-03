@@ -70,19 +70,24 @@ export default async function BlogPage() {
   const posts = await getBlogPosts();
 
   return (
-    <div className="min-h-screen bg-[#292929] pt-24 pb-16">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 font-poppins">
+    <div className="min-h-screen bg-bg pt-24 pb-16">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="mb-16">
+          <div className='flex items-center justify-between'>
+            <h1 className="text-4xl md:text-5xl font-bold text-textSecondary mb-4 font-poppins">
             Fit Hunter Blog
           </h1>
-          <p className="text-lg md:text-xl text-slate-200 max-w-3xl mx-auto font-inter leading-relaxed">
+          <Link href={"/"} className="bg-button px-8 py-3 text-textSecondary font-medium transition-colors font-inter">
+            ← Back to Home
+          </Link>
+          </div>
+          <p className="text-lg md:text-xl text-textMain max-w-3xl font-inter leading-relaxed">
             Practical fitness tips, workout ideas, and nutrition advice from your personal trainer in Watamu, Kenya.
           </p>
         </div>
 
         {posts.length === 0 ? (
-          <div className="text-center text-slate-300 py-12">
+          <div className="text-center text-textMain py-12">
             <p>No posts available yet. Check back soon!</p>
           </div>
         ) : (
@@ -90,7 +95,7 @@ export default async function BlogPage() {
             {posts.map((post) => (
               <article
                 key={post.slug}
-                className="bg-[#4a4a4a] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="bg-lightBg rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
                 <Link href={`/blogs/${post.slug}`} className="block">
                   <div className="relative aspect-video">
@@ -102,19 +107,19 @@ export default async function BlogPage() {
                       className="object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    <div className="absolute bottom-3 left-3 text-white text-sm font-inter">
+                    <div className="absolute bottom-3 left-3 text-textMain text-sm font-inter">
                       {post.date} • {post.readTime}
                     </div>
                   </div>
 
                   <div className="p-6">
-                    <h2 className="text-xl font-bold text-white mb-3 font-poppins line-clamp-2">
+                    <h2 className="text-xl font-bold text-TextSecondary mb-3 font-poppins line-clamp-2">
                       {post.title}
                     </h2>
-                    <p className="text-slate-200 mb-4 line-clamp-3 font-inter text-base leading-relaxed">
+                    <p className="text-textMain mb-4 line-clamp-3 font-inter text-base leading-relaxed">
                       {post.excerpt}
                     </p>
-                    <span className="text-yellow-500 font-medium hover:text-yellow-400 transition-colors font-inter">
+                    <span className="text-button font-medium hover:text-yellow-400 transition-colors font-inter">
                       Read more →
                     </span>
                   </div>
@@ -124,7 +129,7 @@ export default async function BlogPage() {
           </div>
         )}
 
-        <div className="text-center mt-16 text-slate-300 font-inter">
+        <div className="text-center mt-16 text-textMain font-inter">
           <p>More articles coming soon. Follow us on Instagram for updates!</p>
         </div>
       </div>

@@ -4,7 +4,6 @@ import AboutHero from "./AboutHero";
 import OurStory from "./OurStory";
 import WhyChooseUs from "./WhyChooseUs";
 import TeamSection from "./TeamSection";
-// import QualityStandards from "./QualityStandards";
 import Location from "./Location";
 import Faqs from "./Faqs";
 
@@ -13,11 +12,9 @@ export default function AboutPage() {
     <div className="min-h-dvh ">
       <Header />
       <AboutHero />
-      <OurStory />
-      
+      <OurStory />     
       <Location/>
       <WhyChooseUs />
-      {/* <QualityStandards /> */}
       <TeamSection />
       <Faqs/>
       <Footer />

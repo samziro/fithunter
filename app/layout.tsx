@@ -82,7 +82,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${inter.variable} ${poppins.variable} font-inter bg-[#4a4a4a] text-white antialiased`}
+        className={`${inter.variable} ${poppins.variable} font-inter bg-[bg] text-white antialiased`}
         suppressHydrationWarning={true}
       >
         {/* Accessible landmark */}

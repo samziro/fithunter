@@ -37,15 +37,15 @@ const faqs: Faq[] = [
 ];
 
 const FaqSection: React.FC = () => (
-  <section className="my-12 p-6 bg-[#292929]">
+  <section className="py-12 p-6 bg-lightBg">
     <Title heading="Frequently Asked Questions" />
     <div className="space-y-6 max-w-4xl mx-auto mt-8">
       {faqs.map((faq, index) => (
         <div key={index} className="pb-4 border-b border-[#4a4a4a]">
-          <h3 className="font-semibold text-white mb-2 text-lg font-poppins">
+          <h3 className="font-semibold text-textSecondary mb-2 text-lg font-poppins">
             {index + 1}. {faq.question}
           </h3>
-          <p className="text-slate-100 font-inter text-base leading-relaxed">{faq.answer}</p>
+          <p className="text-textMain font-inter text-base leading-relaxed">{faq.answer}</p>
         </div>
       ))}
     </div>

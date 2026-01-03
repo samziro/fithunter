@@ -55,7 +55,8 @@ export default function PaymentForm({ account }: { account: string }) {
   };
 
   return (
-    <div className="space-y-6 max-w-sm mx-auto">
+    <div className='h-dvh bg-bg '>
+      <div className="space-y-6 max-w-sm mx-auto flex-col items-center justify-center">
       <div>
         <label htmlFor="phone" className="block text-sm font-medium text-slate-200 mb-1">
           Phone Number
@@ -93,11 +94,11 @@ export default function PaymentForm({ account }: { account: string }) {
       <button
         onClick={handlePayment}
         disabled={loading || !phone || !amount}
-        className="w-full px-6 py-4 bg-yellow-600 text-white rounded-md font-semibold hover:bg-yellow-700 disabled:opacity-60 disabled:cursor-not-allowed transition font-poppins flex items-center justify-center gap-2"
+        className="w-full px-6 py-4 bg-button text-white rounded-md font-semibold hover:bg-buttonHover disabled:opacity-60 disabled:cursor-not-allowed transition font-poppins flex items-center justify-center gap-2"
       >
         {loading ? (
           <>
-            <span className="animate-spin">⟳</span>
+            <i className="ri-loader-4-line animate-spin"></i>
             Processing…
           </>
         ) : (
@@ -110,6 +111,7 @@ export default function PaymentForm({ account }: { account: string }) {
           Waiting for you to enter PIN on your phone...
         </p>
       )}
+    </div>
     </div>
   );
 }

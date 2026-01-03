@@ -20,27 +20,27 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section className="py-20 bg-[#292929]">
-      <div className="max-w-6xl mx-auto px-6">
+    <section className="py-12 bg-lightBg">
+      <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 font-poppins">
+          <h2 className="text-3xl md:text-4xl font-bold text-textSecondary mb-4 font-poppins">
             Why Choose Fit Hunter?
           </h2>
-          <p className="text-lg md:text-xl text-slate-100 max-w-3xl mx-auto font-inter leading-relaxed">
+          <p className="text-lg md:text-xl text-textMain max-w-3xl mx-auto font-inter leading-relaxed">
             As your personal trainer in Watamu, Kenya, I offer affordable, tailored sessions—one-on-one, group, or beach workouts—to help you reach your fitness goals simply and effectively.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <div key={index} className="bg-[#4a4a4a] flex flex-col items-center justify-start p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+            <div key={index} className="bg-bg flex flex-col items-center justify-start p-8 shadow-lg hover:shadow-xl transition-shadow">
               <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-6">
-                <i className={`${feature.icon} text-3xl text-yellow-600`}></i>
+                <i className={`${feature.icon} text-3xl text-button`}></i>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-4 font-poppins">
+              <h3 className="text-xl font-semibold text-textSecondary mb-4 font-poppins">
                 {feature.title}
               </h3>
-              <p className="text-slate-100 leading-relaxed text-center font-inter text-base">
+              <p className="text-textMain leading-relaxed text-center font-inter text-base">
                 {feature.description}
               </p>
             </div>

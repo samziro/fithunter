@@ -4,11 +4,12 @@
 @tailwind utilities;
 
 :root{
-	--brand-yellow: #f59e0b; /* Tailwind yellow-500 */
-	--brand-yellow-600: #d97706; /* Tailwind yellow-600 */
-	--bg-dark: #1f2937; /* slate-800-ish */
-	--card-dark: #292929;
-	--muted: #4a4a4a;
+	--bg-color: #192028;
+	--standar-card-bg: #1f2a33;
+	--premium-card-bg: #2a3942;
+	--button-bg: #ae782f;
+	--button-hover-bg: #d47b15;
+	--text-color: #e5e7eb;
 }
 
 html,body,#__next{

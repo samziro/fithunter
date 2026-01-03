@@ -28,12 +28,12 @@ export default function ProgramPage() {
   
   
   return (
-    <div className="min-h-dvh bg-[#292929]">
+    <div className="min-h-dvh ">
       <Header />
 
       {/* Hero Section */}
       <section
-        className="relative h-[90dvh] flex items-center justify-center text-white bg-cover bg-center"
+        className="relative h-[90dvh] flex items-center justify-center text-textSecondary bg-cover bg-center"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/trainer.jpg')`,
         }}
@@ -49,10 +49,10 @@ export default function ProgramPage() {
       </section>
 
       {/* Premium Packages */}
-      <section className="py-20 bg-[#292929]">
-        <div className="max-w-6xl mx-auto px-6">
+      <section className="py-20 bg-lightBg">
+        <div className="max-w-7xl mx-auto px-6">
           <Title heading="Premium Packages" />
-          <p className="text-lg text-slate-100 text-center mb-12 font-inter leading-relaxed">
+          <p className="text-lg text-textMain text-center mb-12 font-inter leading-relaxed">
             Tailored for serious results, with nutrition and tracking included. Save more with bigger packages.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -60,7 +60,7 @@ export default function ProgramPage() {
               title="Jade Package"
               price="KSh 20,625"
               features={["5 sessions", "Save 8.3%", "Meal plan", "Personal workouts", "Progress tracking"]}
-              variant="dark"
+              variant="standardCard"
               ctaLabel="Get Started"
               onClick={handleBuyClick}
             />
@@ -69,7 +69,7 @@ export default function ProgramPage() {
               price="KSh 55,500"
               features={["30 sessions", "Save 17.8%", "Meal plan", "Personal workouts", "Progress tracking"]}
               badge="Best Value"
-              variant="highlight"
+              variant="premiumCard"
               ctaLabel="Get Started"
               onClick={handleBuyClick}
             />
@@ -77,19 +77,19 @@ export default function ProgramPage() {
               title="Platinum Package"
               price="KSh 39,170"
               features={["10 sessions", "Save 13%", "Meal plan", "Personal workouts", "Progress tracking"]}
-              variant="dark"
+              variant="standardCard"
               ctaLabel="Get Started"
               onClick={handleBuyClick}
             />
           </div>
           <div className="text-center mt-12">
-            <p className="text-lg text-slate-100 mb-6 font-inter leading-relaxed">
+            <p className="text-lg text-textMain mb-6 font-inter leading-relaxed">
               All premium packages include personalized nutrition guidance and home workouts—backed by 5+ years of certified training experience.
             </p>
             <a href="mailto:1fithunter@gmail.com">
               <button
               
-              className="bg-yellow-600 text-white px-8 py-3 rounded-md text-lg font-semibold hover:bg-yellow-700 transition-colors font-poppins"
+              className="bg-button text-white px-8 py-3 text-lg font-semibold hover:bg-buttonHover transition-colors font-poppins"
             >
               Book Free Consultation
             </button>
@@ -104,10 +104,10 @@ export default function ProgramPage() {
       />
 
       {/* Basic Packages */}
-      <section className="py-20 bg-[#4a4a4a]">
+      <section className="py-20 bg-bg">
         <div className="max-w-7xl mx-auto px-6">
           <Title heading="standard Packages" />
-          <p className="text-lg text-slate-100 text-center mb-12 font-inter leading-relaxed">
+          <p className="text-lg text-textMain text-center mb-12 font-inter leading-relaxed">
             Flexible options for one-on-one sessions. Start small or commit for savings. <br></br> They are only available for in-person training in Watamu.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -115,7 +115,7 @@ export default function ProgramPage() {
               title="Single Session"
               price="KSh 2,000 / mon"
               features={["1 session", "Personalized workout", "Expert tips"]}
-              variant="muted"
+              variant="standardCard"
               ctaLabel="Book Now"
               onClick={handleBuyClick}
             />
@@ -123,7 +123,7 @@ export default function ProgramPage() {
               title="6 Sessions"
               price="KSh 11,400"
               features={["6 sessions", "Save 5%", "Email support"]}
-              variant="muted"
+              variant="standardCard"
               ctaLabel="Get Started"
               onClick={handleBuyClick}
             />
@@ -132,7 +132,7 @@ export default function ProgramPage() {
               price="KSh 18,000"
               features={["10 sessions", "Save 10%", "Priority support"]}
               badge="Popular"
-              variant="highlight"
+              variant="premiumCard"
               ctaLabel="Get Started"
               onClick={handleBuyClick}
             />
@@ -140,7 +140,7 @@ export default function ProgramPage() {
               title="16 Sessions"
               price="KSh 21,600"
               features={["16 sessions", "Save 15%", "Monthly check-ins"]}
-              variant="muted"
+              variant="standardCard"
               ctaLabel="Get Started"
               onClick={handleBuyClick}
             />
@@ -149,10 +149,10 @@ export default function ProgramPage() {
       </section>
 
       {/* Online Services */}
-      <section className="py-20 bg-[#292929]">
-        <div className="max-w-6xl mx-auto px-6">
+      <section className="py-20 bg-lightBg">
+        <div className="max-w-7xl mx-auto px-6">
           <Title heading="Online Services" />
-          <p className="text-lg text-slate-100 text-center mb-12 font-inter leading-relaxed">
+          <p className="text-lg text-textMain text-center mb-12 font-inter leading-relaxed">
             Train from anywhere with virtual options—perfect for busy schedules.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -160,7 +160,7 @@ export default function ProgramPage() {
               title="Self-Paced"
               price="KSh 2,000 / mon"
               features={["Video workouts", "Email support", "Flexible access"]}
-              variant="dark"
+              variant="standardCard"
               ctaLabel="Get Started"
               onClick={handleBuyClick}
             />
@@ -169,7 +169,7 @@ export default function ProgramPage() {
               price="KSh 11,500 / mon"
               features={["Custom nutrition", "Weekly tips", "Progress tracking"]}
               badge="Essential"
-              variant="highlight"
+              variant="premiumCard"
               ctaLabel="Get Started"
               onClick={handleBuyClick}
             />
@@ -177,7 +177,7 @@ export default function ProgramPage() {
               title="Online Coaching"
               price="KSh 21,600 / mon"
               features={["Live sessions", "Personal plans", "Ongoing support"]}
-              variant="dark"
+              variant="standardCard"
               ctaLabel="Get Started"
               onClick={handleBuyClick}
             />
@@ -186,13 +186,13 @@ export default function ProgramPage() {
       </section>
 
       {/* Training Promise */}
-      <section className="py-20 bg-[#4a4a4a]">
-        <div className="max-w-6xl mx-auto px-6">
+      <section className="py-20 bg-bg">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 font-poppins">
+            <h2 className="text-3xl md:text-4xl font-bold text-textSecondary mb-4 font-poppins">
               Our Promise
             </h2>
-            <p className="text-lg md:text-xl text-slate-100 font-inter leading-relaxed">
+            <p className="text-lg md:text-xl text-textMain font-inter leading-relaxed">
               Effective, personalized fitness from a certified trainer in Watamu.
             </p>
           </div>
@@ -201,10 +201,10 @@ export default function ProgramPage() {
               <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <i className="ri-heart-pulse-line text-yellow-600 text-2xl"></i>
               </div>
-              <h3 className="font-semibold text-lg mb-2 text-white font-poppins">
+              <h3 className="font-semibold text-lg mb-2 text-textSecondary font-poppins">
                 Tailored Plans
               </h3>
-              <p className="text-slate-100 text-base font-inter leading-relaxed">
+              <p className="text-textMain text-base font-inter leading-relaxed">
                 Customized to your goals and lifestyle.
               </p>
             </div>
@@ -212,10 +212,10 @@ export default function ProgramPage() {
               <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <i className="ri-shield-check-line text-yellow-600 text-2xl"></i>
               </div>
-              <h3 className="font-semibold text-lg mb-2 text-white font-poppins">
+              <h3 className="font-semibold text-lg mb-2 text-textSecondary font-poppins">
                 Professional Guidance
               </h3>
-              <p className="text-slate-100 text-base font-inter leading-relaxed">
+              <p className="text-textMain text-base font-inter leading-relaxed">
                 Safe methods with proven results.
               </p>
             </div>
@@ -223,10 +223,10 @@ export default function ProgramPage() {
               <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <i className="ri-group-line text-yellow-600 text-2xl"></i>
               </div>
-              <h3 className="font-semibold text-lg mb-2 text-white font-poppins">
+              <h3 className="font-semibold text-lg mb-2 text-textSecondary font-poppins">
                 Real Results
               </h3>
-              <p className="text-slate-100 text-base font-inter leading-relaxed">
+              <p className="text-textMain text-base font-inter leading-relaxed">
                 Join 100+ transformed clients.
               </p>
             </div>
@@ -235,24 +235,24 @@ export default function ProgramPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-[#292929] text-white">
+      <section className="py-20 bg-lightBg">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 font-poppins">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 font-poppins text-textSecondary">
             Ready to Get Fit?
           </h2>
-          <p className="text-lg md:text-xl mb-8 text-slate-100 font-inter leading-relaxed">
+          <p className="text-lg md:text-xl mb-8 text-textMain font-inter leading-relaxed">
             Start with a free consultation from your trusted Watamu trainer.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="mailto:1thefithunter@gmail.com"
-              className="bg-white text-yellow-600 px-8 py-3 rounded-md text-lg font-semibold hover:bg-gray-100 transition-colors font-poppins"
+              className="bg-white text-button px-8 py-3  text-lg font-semibold hover:bg-gray-100 transition-colors font-poppins"
             >
               Book Free Consultation
             </a>
             <a
               href="tel:+254748679264"
-              className="border-2 border-white text-white px-8 py-3 rounded-md text-lg font-semibold hover:bg-white hover:text-yellow-600 transition-colors font-poppins"
+              className="border-2 border-white text-white px-8 py-3  text-lg font-semibold hover:bg-white hover:text-yellow-600 transition-colors font-poppins"
             >
               Call +254 748 679 264
             </a>

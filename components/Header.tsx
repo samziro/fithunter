@@ -17,7 +17,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="bg-[#4a4a4a] shadow-lg fixed top-0 left-0 right-0 z-50">
+    <header className="bg-bg shadow-lg fixed top-0 left-0 right-0 z-50">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-center py-2">
           {/* Logo */}
@@ -29,8 +29,9 @@ export default function Header() {
               height={80}
               className="rounded-full"
               priority
+              
             />
-            <span className="ml-3 text-xl font-bold text-white font-poppins hidden sm:block">
+            <span className="ml-3 text-xl font-bold text-textSecondary font-poppins hidden sm:block">
               Fit Hunter
             </span>
           </Link>
@@ -41,20 +42,20 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-white font-medium hover:text-yellow-400 transition-colors font-inter"
+                className="text-textSecondary font-medium hover:text-button transition-colors font-inter"
               >
                 {link.label}
               </Link>
             ))}
             <button
               onClick={() => setIsAdminOpen(true)}
-              className="text-white font-medium hover:text-yellow-400 transition-colors font-inter"
+              className="text-textSecondary font-medium hover:text-button transition-colors font-inter"
             >
               Admin
             </button>
             <Link
               href="/programs"
-              className="bg-yellow-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-yellow-700 transition-colors font-poppins"
+              className="bg-button text-white px-6 py-3 font-semibold hover:bg-buttonHover transition-colors font-poppins"
             >
               Get Started
             </Link>
@@ -63,7 +64,7 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden text-yellow-600 focus:outline-none"
+            className="md:hidden text-button focus:outline-none"
             aria-label="Toggle menu"
           >
             <i className={`${isMenuOpen ? 'ri-close-line' : 'ri-menu-line'} text-3xl`} />
@@ -79,7 +80,7 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-white font-medium hover:text-yellow-400 transition-colors py-2 font-inter"
+                  className="text-white font-medium hover:text-button transition-colors py-2 font-inter"
                 >
                   {link.label}
                 </Link>
@@ -89,14 +90,14 @@ export default function Header() {
                   setIsAdminOpen(true);
                   setIsMenuOpen(false);
                 }}
-                className="text-white font-medium hover:text-yellow-400 transition-colors text-left py-2 font-inter"
+                className="text-white font-medium hover:text-button transition-colors text-left py-2 font-inter"
               >
                 Admin
               </button>
               <Link
                 href="/programs"
                 onClick={() => setIsMenuOpen(false)}
-                className="bg-yellow-600 text-white px-6 py-3 rounded-md font-semibold text-center hover:bg-yellow-700 transition-colors font-poppins"
+                className="bg-button text-textSecondary px-6 py-3  font-semibold text-center hover:bg-buttonHover transition-colors font-poppins"
               >
                 Get Started
               </Link>
