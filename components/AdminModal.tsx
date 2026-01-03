@@ -46,7 +46,7 @@ export default function AdminModal({ open, onClose }: AdminModalProps) {
       }
 
       setError('Incorrect email or password');
-    } catch (err) {
+    } catch {
       setError('Something went wrong. Please try again.');
     } finally {
       setLoading(false);

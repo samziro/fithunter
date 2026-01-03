@@ -85,7 +85,7 @@ export default function AdminBookingsPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ bookingId: booking.id }),
       }).catch(console.error);
-    } catch (err) {
+    } catch {
       setError('Failed to open messaging app.');
     } finally {
       setSendingNotificationId(null);

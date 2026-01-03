@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 import React from 'react';
@@ -11,7 +10,7 @@ const Location = () => {
       <div className="max-w-6xl mx-auto my-12 py-8 flex flex-col md:flex-row gap-8 items-center">
         <div className="w-full md:w-1/2 mx-auto flex flex-col gap-4 px-6">
           <p className="mb-4 text-slate-100 text-base leading-relaxed font-inter">
-            Fit Hunter is based in Watamu, Kenya, with no fixed gym—we come to you! Whether it's your home, a beach, park, or any spot you prefer, our sessions use the coastal environment for motivating workouts.
+            Fit Hunter is based in Watamu, Kenya, with no fixed gym—we come to you! Whether it is your home, a beach, park, or any spot you prefer, our sessions use the coastal environment for motivating workouts.
           </p>
           <div className="space-y-4">
             <div className="flex items-start space-x-4">
@@ -52,7 +51,7 @@ const Location = () => {
               <div>
                 <h5 className="font-semibold text-white mb-1 font-poppins text-lg">How It Works</h5>
                 <p className="text-slate-100 font-inter">
-                  Tell us your preferred location—we'll meet you there for personalized training.
+                  Tell us your preferred location - we will meet you there for personalized training.
                 </p>
               </div>
             </div>

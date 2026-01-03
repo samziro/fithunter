@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 import Image from 'next/image';
@@ -13,7 +12,7 @@ export default function TeamSection() {
             Meet Your Trainer
           </h2>
           <p className="text-lg md:text-xl text-slate-100 max-w-3xl mx-auto font-inter leading-relaxed">
-            I'm dedicated to your fitness journey, with expert guidance to help you build strength and confidence.
+            I &apos;m dedicated to your fitness journey, with expert guidance to help you build strength and confidence.
           </p>
         </div>
 
@@ -66,7 +65,7 @@ export default function TeamSection() {
           <div className="bg-yellow-600/20 rounded-lg border border-yellow-400/30 text-white py-12 px-8">
             <h3 className="text-2xl md:text-3xl font-bold mb-4 font-poppins">Ready to Start?</h3>
             <p className="text-lg md:text-xl mb-8 text-slate-100 font-inter leading-relaxed">
-              Join 100+ happy clients who've transformed with Fit Hunter in Watamu.
+              Join 100+ happy clients who &apos;ve transformed with Fit Hunter in Watamu.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
               <Link href="/programs" className="bg-white text-yellow-600 px-8 py-3 font-semibold rounded-md hover:bg-gray-100 transition-colors font-poppins">

@@ -1,12 +1,9 @@
-/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Link from "next/link";
-import Image from "next/image";
 import ClientModal from "@/components/ClientModal";
 import Title from "@/components/Title";
 import PackageCard from "@/components/PackageCard";
@@ -24,7 +21,7 @@ export default function ProgramPage() {
         router.push("/order");
         return;
       }
-    } catch (e) {}
+    } catch {}
     setIsClientModalOpen(true);
   };
 
@@ -89,12 +86,14 @@ export default function ProgramPage() {
             <p className="text-lg text-slate-100 mb-6 font-inter leading-relaxed">
               All premium packages include personalized nutrition guidance and home workouts—backed by 5+ years of certified training experience.
             </p>
-            <button
-              onClick={handleBuyClick}
+            <a href="mailto:1fithunter@gmail.com">
+              <button
+              
               className="bg-yellow-600 text-white px-8 py-3 rounded-md text-lg font-semibold hover:bg-yellow-700 transition-colors font-poppins"
             >
               Book Free Consultation
             </button>
+            </a>
           </div>
         </div>
       </section>
@@ -214,7 +213,7 @@ export default function ProgramPage() {
                 <i className="ri-shield-check-line text-yellow-600 text-2xl"></i>
               </div>
               <h3 className="font-semibold text-lg mb-2 text-white font-poppins">
-                Expert Guidance
+                Professional Guidance
               </h3>
               <p className="text-slate-100 text-base font-inter leading-relaxed">
                 Safe methods with proven results.

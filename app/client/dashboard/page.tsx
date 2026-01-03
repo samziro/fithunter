@@ -17,7 +17,7 @@ export default function ClientDashboard() {
         return;
       }
       setEmail(clientEmail);
-    } catch (e) {
+    } catch {
       router.push('/login');
       return;
     } finally {
@@ -55,7 +55,7 @@ export default function ClientDashboard() {
                   <td className="py-3 pr-4 align-top">Progress Tracking</td>
                   <td className="py-3 pr-4 align-top">Graphs, stats, achievements</td>
                   <td className="py-3 pr-4 align-top">Motivates continued use of purchased programs</td>
-                  <td className="py-3 align-top">Trainerize "My Progress", TrueCoach compliance views</td>
+                  <td className="py-3 align-top">Trainerize &quot;My Progress&quot;, TrueCoach compliance views</td>
                 </tr>
                 <tr className="border-b">
                   <td className="py-3 pr-4 align-top">Program Access</td>

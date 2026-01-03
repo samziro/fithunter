@@ -46,7 +46,7 @@ export default function ClientModal({ open, onClose }: ClientModalProps) {
       }
 
       setError('Incorrect email or password');
-    } catch (err) {
+    } catch {
       setError('Something went wrong. Please try again.');
     } finally {
       setLoading(false);
