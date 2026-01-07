@@ -17,7 +17,7 @@ export default function ClientDashboard() {
         return;
       }
       setEmail(clientEmail);
-    } catch (e) {
+    } catch {
       router.push('/login');
       return;
     } finally {
@@ -28,34 +28,34 @@ export default function ClientDashboard() {
   if (loading) return <div className="p-8">Loading...</div>;
 
   return (
-    <div className="min-h-screen bg-gray-50 py-24">
+    <div className="min-h-screen bg-bg py-24">
       <div className="max-w-4xl mx-auto px-6">
         <h1 className="text-3xl font-bold mb-4">Client Dashboard</h1>
-        <p className="text-gray-600 mb-6">Welcome back{email ? `, ${email}` : ''}.</p>
+        <p className="text-textSecondary mb-6">Welcome back{email ? `, ${email}` : ''}.</p>
 
-        <section className="bg-white rounded-2xl p-6 shadow mb-6">
+        <section className="bg-lightBg rounded-2xl p-6 shadow mb-6">
           <h2 className="font-semibold mb-3">Purchased Programs</h2>
-          <p className="text-sm text-gray-600">Programs you purchased will appear here after integration.</p>
+          <p className="text-sm text-textSecondary">Programs you purchased will appear here after integration.</p>
         </section>
 
-        <section className="bg-white rounded-2xl p-6 shadow">
+        <section className="bg-lightBg rounded-2xl p-6 shadow">
           <h2 className="font-semibold mb-4">Client Features (for Paid Clients)</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-left table-auto">
               <thead>
-                <tr className="text-sm text-gray-600 border-b">
+                <tr className="text-sm text-textSecondary border-b">
                   <th className="py-3 pr-4">Feature Category</th>
                   <th className="py-3 pr-4">Key Elements</th>
                   <th className="py-3 pr-4">Why Essential</th>
                   <th className="py-3 py-3">Examples</th>
                 </tr>
               </thead>
-              <tbody className="text-sm text-gray-700">
+              <tbody className="text-sm text-textMain">
                 <tr className="border-b">
                   <td className="py-3 pr-4 align-top">Progress Tracking</td>
                   <td className="py-3 pr-4 align-top">Graphs, stats, achievements</td>
                   <td className="py-3 pr-4 align-top">Motivates continued use of purchased programs</td>
-                  <td className="py-3 align-top">Trainerize "My Progress", TrueCoach compliance views</td>
+                  <td className="py-3 align-top">Trainerize &quot;My Progress&quot;, TrueCoach compliance views</td>
                 </tr>
                 <tr className="border-b">
                   <td className="py-3 pr-4 align-top">Program Access</td>

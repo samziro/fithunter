@@ -1,8 +1,6 @@
-/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '@supabase/supabase-js';
 
@@ -19,15 +17,10 @@ interface Booking {
   program: string;
   quantity: number;
   totalAmount: number;
-  notes: string;
+  notes?: string;
   status: 'pending' | 'confirmed' | 'completed';
   bookingDate: string;
   notificationSent: boolean;
-  notifications?: {
-    message: string;
-    timestamp: string;
-    type: 'info' | 'success';
-  }[];
 }
 
 export default function AdminBookingsPage() {
@@ -36,15 +29,43 @@ export default function AdminBookingsPage() {
   const [sendingNotificationId, setSendingNotificationId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  // const router = useRouter();
 
-  // send notification (opens app/link) then mark booking as notified on server
+  // Fetch bookings from Supabase
+  useEffect(() => {
+    const loadBookings = async () => {
+      setLoading(true);
+      setError('');
+
+      const { data, error } = await supabase
+        .from('bookings')
+        .select('*')
+        .order('bookingDate', { ascending: false });
+
+      if (error) {
+        setError('Failed to load bookings. Please try again.');
+        setBookings([]);
+      } else {
+        setBookings(data || []);
+      }
+      setLoading(false);
+    };
+
+    loadBookings();
+
+    // Auto-refresh every 15 seconds
+    const interval = setInterval(loadBookings, 15000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Send notification via WhatsApp or SMS, then mark as notified
   const sendNotification = async (booking: Booking, channel: 'whatsapp' | 'sms') => {
     if (sendingNotificationId) return;
+
     setSendingNotificationId(booking.id);
     try {
-      const messageText = `Hi ${booking.customerName}, your booking #${booking.id} for ${booking.program} is ${booking.status}. Thank you for choosing Fit Hunter!`;
-      const encoded = encodeURIComponent(messageText);
+      const message = `Hi ${booking.customerName}, your booking for ${booking.quantity} × ${booking.program} (KES ${booking.totalAmount}) has been ${booking.status}. Thank you for choosing Fit Hunter!`;
+
+      const encoded = encodeURIComponent(message);
       const phone = formatPhoneForWhatsApp(booking.phone);
 
       if (channel === 'whatsapp') {
@@ -53,115 +74,35 @@ export default function AdminBookingsPage() {
         window.open(`sms:${booking.phone}?body=${encoded}`, '_blank');
       }
 
-      // mark notified on server
-      const res = await fetch('/api/admin/mark-notified', {
+      // Optimistically mark as sent
+      setBookings((prev) =>
+        prev.map((b) => (b.id === booking.id ? { ...b, notificationSent: true } : b))
+      );
+
+      // Call API to persist (fire-and-forget for better UX)
+      fetch('/api/admin/mark-notified', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
         body: JSON.stringify({ bookingId: booking.id }),
-      });
-
-      if (!res.ok) {
-        const txt = await res.text().catch(() => '');
-        console.error('mark-notified failed', res.status, txt);
-        setError('Failed to mark booking as notified.');
-      } else {
-        const json = await res.json().catch(() => ({}));
-        if (json?.ok && json.booking) {
-          setBookings((prev) => prev.map((o) => (o.id === json.booking.id ? { ...o, ...json.booking } : o)));
-        } else {
-          setBookings((prev) => prev.map((o) => (o.id === booking.id ? { ...o, notificationSent: true } : o)));
-        }
-      }
-    } catch (e) {
-      console.error('sendNotification error', e);
-      setError('Failed to send notification.');
+      }).catch(console.error);
+    } catch {
+      setError('Failed to open messaging app.');
     } finally {
       setSendingNotificationId(null);
     }
   };
 
-  // Fetch bookings from Supabase
-  useEffect(() => {
-    const loadBookings = async () => {
-      setLoading(true);
-      setError('');
-      const { data, error } = await supabase
-        .from('bookings')
-        .select('*')
-        .order('bookingDate', { ascending: false });
-
-      if (error) {
-        setError('Failed to fetch bookings.');
-        setBookings([]);
-        setLoading(false);
-        return;
-      }
-      setBookings(data || []);
-      setLoading(false);
-    };
-
-    loadBookings();
-
-    const interval = setInterval(loadBookings, 10000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  // Update booking status in Supabase
-  // const updateBookingStatus = async (bookingId: string, newStatus: 'pending' | 'confirmed' | 'completed') => {
-  //   setError('');
-  //   try {
-  //     const body = { bookingId, newStatus };
-
-  //     const res = await fetch('/api/admin/update-booking', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       credentials: 'include',
-  //       body: JSON.stringify(body),
-  //     });
-
-  //     if (!res.ok) {
-  //       const txt = await res.text().catch(() => '');
-  //       console.error('update-booking response status', res.status, 'text:', txt);
-  //       const json = (() => { try { return JSON.parse(txt || '{}'); } catch { return {}; } })();
-  //       setError(json?.message || `Update failed (status ${res.status})`);
-  //       return;
-  //     }
-
-  //     const json = await res.json();
-  //     if (!json?.ok) {
-  //       console.error('updateBookingStatus failed:', json);
-  //       setError(json?.message || 'Failed to update booking.');
-  //       return;
-  //     }
-
-  //     const updated = json.booking;
-  //     setBookings((prev) => prev.map((o) => (o.id === updated.id ? { ...o, ...updated } : o)));
-  //   } catch (err) {
-  //     console.error('updateBookingStatus error', err);
-  //     setError('Failed to update booking.');
-  //   }
-  // };
-
-  
-
-  const formatPhoneForWhatsApp = (phone: string) => {
-    let cleaned = String(phone).replace(/[\s-]/g, '');
-    if (cleaned.startsWith('0')) {
-      cleaned = '254' + cleaned.substring(1);
-    }
-    if (cleaned.startsWith('+')) {
-      cleaned = cleaned.substring(1);
-    }
+  const formatPhoneForWhatsApp = (phone: string): string => {
+    let cleaned = phone.replace(/[\s+-]/g, '');
+    if (cleaned.startsWith('0')) cleaned = '254' + cleaned.slice(1);
+    if (cleaned.startsWith('254') && cleaned.length === 12) return cleaned;
+    if (/^\d{9,10}$/.test(cleaned)) return '254' + cleaned.replace(/^7/, '7');
     return cleaned;
   };
 
-  const filteredBookings = filter === 'all' ? bookings : bookings.filter((booking) => booking.status === filter);
-
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-GB', {
-      day: '2-digit',
+      day: 'numeric',
       month: 'short',
       year: 'numeric',
       hour: '2-digit',
@@ -169,282 +110,246 @@ export default function AdminBookingsPage() {
     });
   };
 
-  const getStatusColor = (status: string) => {
+  const getStatusBadge = (status: string) => {
     switch (status) {
       case 'pending':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-yellow-100 text-yellow-800 border-yellow-300';
       case 'confirmed':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-blue-100 text-blue-800 border-blue-300';
       case 'completed':
-        return 'bg-green-100 text-green-800';
+        return 'bg-green-100 text-green-800 border-green-300';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-gray-100 text-gray-800 border-gray-300';
     }
   };
 
+  const filteredBookings = filter === 'all' ? bookings : bookings.filter((b) => b.status === filter);
+
+  // Stats
   const totalBookings = bookings.length;
-  const pendingBookings = bookings.filter((o) => o.status === 'pending').length;
-  const confirmedBookings = bookings.filter((o) => o.status === 'confirmed').length;
-  const totalRevenue = bookings.reduce((sum, booking) => sum + booking.totalAmount, 0);
+  const pendingCount = bookings.filter((b) => b.status === 'pending').length;
+  const confirmedCount = bookings.filter((b) => b.status === 'confirmed').length;
+  const newPendingCount = bookings.filter((b) => b.status === 'pending' && !b.notificationSent).length;
+  const totalRevenue = bookings.reduce((sum, b) => sum + b.totalAmount, 0);
 
   return (
-    
-      <div className="min-h-dvh bg-[#4a4a4a] py-8">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:justify-between md:items-center mb-8">
-            <div>
-              <h1 className="text-xl md:text-3xl md:text-center font-bold text-white">Booking Management</h1>
-              <p className="text-slate-100 my-4">Manage and track all client bookings - Updates in real-time</p>
-            </div>
-            <div className="flex flex-row space-x-4">
-              <Link
-                href="/"
-                className="bg-yellow-600 text-white px-6 py-3  hover:bg-yellow-700 transition-colors whitespace-nowrap cursor-pointer"
-              >
-                Back to Website
-              </Link>
-              {/* <button
-                onClick={handleLogout}
-                className="bg-red-600 text-white px-6 py-3 rounded-xl hover:bg-red-700 transition-colors whitespace-nowrap cursor-pointer"
-              >
-                <div className="flex items-center space-x-2">
-                  <i className="ri-logout-box-line"></i>
-                  <span>Logout</span>
-                </div>
-              </button> */}
+    <div className="min-h-dvh bg-[#292929] py-8">
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-bold text-white font-poppins">
+              Booking Dashboard
+            </h1>
+            <p className="text-slate-300 mt-2 font-inter">Real-time overview of all client bookings</p>
+          </div>
+          <Link
+            href="/"
+            className="bg-yellow-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-yellow-700 transition-colors font-poppins"
+          >
+            ← Back to Website
+          </Link>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+          <div className="bg-[#4a4a4a] rounded-xl shadow-lg p-6 border border-yellow-600/30">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-slate-300 text-sm font-inter">Total Bookings</p>
+                <p className="text-3xl font-bold text-white mt-1 font-poppins">{totalBookings}</p>
+              </div>
+              <i className="ri-calendar-check-line text-yellow-500 text-3xl" />
             </div>
           </div>
 
-          {/* Statistics Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div className="bg-yellow-600/20 backdrop-blur-sm border-2 border-yellow-400/30 shadow-lg p-6">
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
-                  <i className="ri-calendar-check-line text-yellow-600 text-xl"></i>
-                </div>
-                <div>
-                  <p className="text-yellow-500 text-sm">Total Clients</p>
-                  <p className="text-2xl font-bold text-yellow-500">{totalBookings}</p>
-                </div>
+          <div className="bg-[#4a4a4a] rounded-xl shadow-lg p-6 border border-yellow-600/30">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-slate-300 text-sm font-inter">Awaiting Payment</p>
+                <p className="text-3xl font-bold text-white mt-1 font-poppins">{pendingCount}</p>
               </div>
-            </div>
-
-            <div className="bg-yellow-600/20 backdrop-blur-sm border-2 border-yellow-400/30 shadow-lg p-6">
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
-                  <i className="ri-time-line text-yellow-600 text-xl"></i>
-                </div>
-                <div>
-                  <p className="text-yellow-500 text-sm">Registered and not paid</p>
-                  <p className="text-2xl font-bold text-yellow-500">{pendingBookings}</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-yellow-600/20 backdrop-blur-sm border-2 border-yellow-400/30 shadow-lg p-6">
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                  <i className="ri-checkbox-circle-line text-blue-600 text-xl"></i>
-                </div>
-                <div>
-                  <p className="text-yellow-500 text-sm">Registered and paid Clients</p>
-                  <p className="text-2xl font-bold text-yellow-500">{confirmedBookings}</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-yellow-600/20 backdrop-blur-sm border-2 border-yellow-400/30 shadow-lg p-6">
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                  <i className="ri-money-dollar-circle-line text-green-600 text-xl"></i>
-                </div>
-                <div>
-                  <p className="text-yellow-500 text-sm">Revenue</p>
-                  <p className="text-2xl font-bold text-yellow-500">KES {totalRevenue.toLocaleString()}</p>
-                </div>
-              </div>
+              <i className="ri-time-line text-yellow-500 text-3xl" />
             </div>
           </div>
 
-          {/* Filter Tabs */}
-          <div className="bg-white rounded-2xl shadow-lg p-2 mb-6">
-            <div className="flex space-x-2 md:space-x-3">
-              {(['all', 'pending', 'confirmed', 'completed'] as const).map((status) => (
-                <button
-                  key={status}
-                  onClick={() => setFilter(status)}
-                  className={`${filter === status ? 'bg-blue-600 text-white' : 'text-gray-600 hover:bg-gray-100'} rounded-lg md:px-6 md:py-2 md:rounded-xl font-medium transition-all whitespace-nowrap cursor-pointer`}
-                >
-                  {status.charAt(0).toUpperCase() + status.slice(1)}
-                  {status !== 'all' && (
-                    <span className="ml-1 md:ml-2 text-sm">
-                      ({status === 'pending' ? pendingBookings : status === 'confirmed' ? confirmedBookings : bookings.filter((o) => o.status === 'completed').length})
-                    </span>
-                  )}
-                </button>
-              ))}
+          <div className="bg-[#4a4a4a] rounded-xl shadow-lg p-6 border border-yellow-600/30">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-slate-300 text-sm font-inter">Paid & Confirmed</p>
+                <p className="text-3xl font-bold text-white mt-1 font-poppins">{confirmedCount}</p>
+              </div>
+              <i className="ri-checkbox-circle-line text-blue-500 text-3xl" />
             </div>
           </div>
 
-          {/* Error Message */}
-          {error && (
-            <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
-              <div className="flex items-center space-x-2">
-                <i className="ri-error-warning-line text-red-500"></i>
-                <p className="text-red-700 text-sm">{error}</p>
+          <div className="bg-[#4a4a4a] rounded-xl shadow-lg p-6 border border-yellow-600/30">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-slate-300 text-sm font-inter">Total Revenue</p>
+                <p className="text-3xl font-bold text-white mt-1 font-poppins">
+                  KSh {totalRevenue.toLocaleString()}
+                </p>
               </div>
+              <i className="ri-money-dollar-circle-line text-green-500 text-3xl" />
             </div>
-          )}
-
-          {/* Loading Spinner */}
-          {loading && (
-            <div className="flex justify-center items-center py-12">
-              <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-            </div>
-          )}
-
-          {/* New Booking Alert */}
-          {!loading && bookings.some((booking) => booking.status === 'pending' && !booking.notificationSent) && (
-            <div className="bg-yellow-50 border-2 border-yellow-200 rounded-2xl p-4 mb-6">
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
-                  <i className="ri-notification-3-line text-yellow-600"></i>
-                </div>
-                <div>
-                  <p className="font-semibold text-yellow-800">New Bookings Available!</p>
-                  <p className="text-yellow-700 text-sm">
-                    You have {bookings.filter((o) => o.status === 'pending' && !o.notificationSent).length} new bookings waiting.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Bookings List */}
-          <div className="space-y-4">
-            {!loading && filteredBookings.length === 0 ? (
-              <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
-                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <i className="ri-inbox-line text-gray-400 text-2xl"></i>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">No bookings found</h3>
-                <p className="text-gray-600">No bookings match your current filter.</p>
-              </div>
-            ) : (
-              filteredBookings.map((booking) => (
-                <div key={booking.id} className="bg-white rounded-2xl shadow-lg p-6">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-3 mb-4">
-                        <span className="text-lg font-bold text-gray-900">Booking #{booking.id}</span>
-                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(booking.status)}`}>
-                          {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
-                        </span>
-                        {booking.notificationSent && (
-                          <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-                            Notified
-                          </span>
-                        )}
-                        {booking.status === 'pending' && !booking.notificationSent && (
-                          <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium animate-pulse">
-                            New
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div>
-                          <p className="font-semibold">Client</p>
-                          <p className="text-sm text-gray-600">{booking.customerName}</p>
-                          <p className="text-sm text-gray-600">{booking.phone}</p>
-                        </div>
-
-                        <div>
-                          <p className="font-semibold">Program & Sessions</p>
-                          <p className="text-sm text-gray-600">{booking.quantity} x {booking.program}</p>
-                          <p className="text-sm text-blue-600 font-medium">KES {booking.totalAmount}</p>
-                        </div>
-
-                        <div>
-                          <p className="font-semibold">Preferred Area</p>
-                          <p className="text-sm text-gray-600">{booking.location}</p>
-                        </div>
-
-                        <div>
-                          <p className="font-semibold">Booking Date</p>
-                          <p className="text-sm text-gray-600">{formatDate(booking.bookingDate)}</p>
-                        </div>
-
-                        {booking.notes && (
-                          <div className="md:col-span-2">
-                            <p className="font-semibold">Notes</p>
-                            <p className="text-sm text-gray-600">{booking.notes}</p>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col space-y-3 lg:w-48">
-                      {/* Status Update */}
-                      {/* <select
-                        value={booking.status}
-                        onChange={(e) => updateBookingStatus(booking.id, e.target.value as any)}
-                        className="px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent cursor-pointer pr-8"
-                      >
-                        <option value="pending">Pending</option>
-                        <option value="confirmed">Confirmed</option>
-                        <option value="completed">Completed</option>
-                      </select> */}
-
-                      {/* Notify Client Buttons */}
-                      <div className="flex space-x-2">
-                        <button
-                          type="button"
-                          onClick={() => sendNotification(booking, 'whatsapp')}
-                          disabled={booking.status === 'completed' || sendingNotificationId === booking.id}
-                          className={`flex-1 px-2 py-2 rounded-xl font-medium transition-colors whitespace-nowrap cursor-pointer ${
-                            booking.status === 'completed' || sendingNotificationId === booking.id
-                              ? 'bg-gray-100 text-gray-500 cursor-not-allowed'
-                              : 'bg-blue-600 text-white hover:bg-blue-700'
-                          }`}
-                          title="Notify via WhatsApp"
-                        >
-                          {sendingNotificationId === booking.id ? 'Sending...' : 'WhatsApp'}
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={() => sendNotification(booking, 'sms')}
-                          disabled={booking.status === 'completed' || sendingNotificationId === booking.id}
-                          className={`flex-1 px-2 py-2 rounded-xl font-medium transition-colors whitespace-nowrap cursor-pointer ${
-                            booking.status === 'completed' || sendingNotificationId === booking.id
-                              ? 'bg-gray-100 text-gray-500 cursor-not-allowed'
-                              : 'bg-blue-600 text-white hover:bg-blue-700'
-                          }`}
-                          title="Notify via SMS"
-                        >
-                          {sendingNotificationId === booking.id ? 'Sending...' : 'SMS'}
-                        </button>
-                      </div>
-
-                      {/* Call Client */}
-                      <a
-                        href={`tel:${booking.phone}`}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors text-center whitespace-nowrap cursor-pointer"
-                      >
-                        <div className="flex items-center justify-center space-x-2">
-                          <i className="ri-phone-line"></i>
-                          <span>Call</span>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              ))
-            )}
           </div>
         </div>
+
+        {/* New Bookings Alert */}
+        {newPendingCount > 0 && (
+          <div className="bg-yellow-600/20 border border-yellow-500/50 rounded-xl p-5 mb-8 flex items-center gap-4">
+            <i className="ri-notification-3-line text-yellow-500 text-2xl animate-pulse" />
+            <div>
+              <p className="font-semibold text-yellow-300">New bookings!</p>
+              <p className="text-yellow-200">
+                {newPendingCount} client{newPendingCount > 1 ? 's have' : ' has'} booked and is awaiting confirmation.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Error Alert */}
+        {error && (
+          <div className="bg-red-900/30 border border-red-600/50 rounded-xl p-5 mb-8 flex items-center gap-4">
+            <i className="ri-error-warning-line text-red-400 text-xl" />
+            <p className="text-red-300">{error}</p>
+          </div>
+        )}
+
+        {/* Filter Tabs */}
+        <div className="flex flex-wrap gap-3 mb-8">
+          {(['all', 'pending', 'confirmed', 'completed'] as const).map((status) => {
+            const count =
+              status === 'all'
+                ? totalBookings
+                : status === 'pending'
+                ? pendingCount
+                : status === 'confirmed'
+                ? confirmedCount
+                : bookings.filter((b) => b.status === 'completed').length;
+
+            return (
+              <button
+                key={status}
+                onClick={() => setFilter(status)}
+                className={`px-6 py-3 rounded-xl font-medium transition-colors font-poppins ${
+                  filter === status
+                    ? 'bg-yellow-600 text-white shadow-lg'
+                    : 'bg-[#4a4a4a] text-slate-300 hover:bg-[#5a5a5a]'
+                }`}
+              >
+                {status.charAt(0).toUpperCase() + status.slice(1)} ({count})
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Bookings List */}
+        {loading ? (
+          <div className="flex justify-center py-20">
+            <div className="w-12 h-12 border-4 border-yellow-600 border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : filteredBookings.length === 0 ? (
+          <div className="text-center py-20 bg-[#4a4a4a] rounded-2xl">
+            <i className="ri-inbox-line text-6xl text-slate-600 mb-4" />
+            <p className="text-xl text-slate-400 font-inter">No bookings found for this filter.</p>
+          </div>
+        ) : (
+          <div className="space-y-6">
+            {filteredBookings.map((booking) => (
+              <div
+                key={booking.id}
+                className="bg-[#4a4a4a] rounded-2xl shadow-xl p-6 md:p-8 border border-slate-700"
+              >
+                <div className="flex flex-col lg:flex-row lg:justify-between gap-6">
+                  <div className="flex-1">
+                    {/* Header */}
+                    <div className="flex flex-wrap items-center gap-3 mb-5">
+                      <h3 className="text-xl font-bold text-white font-poppins">
+                        Booking #{booking.id.slice(0, 8)}
+                      </h3>
+                      <span className={`px-4 py-1 rounded-full text-sm font-medium border ${getStatusBadge(booking.status)}`}>
+                        {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
+                      </span>
+                      {booking.notificationSent ? (
+                        <span className="px-4 py-1 bg-green-900/50 text-green-300 rounded-full text-sm font-medium border border-green-700">
+                          Notified
+                        </span>
+                      ) : booking.status === 'pending' ? (
+                        <span className="px-4 py-1 bg-red-900/50 text-red-300 rounded-full text-sm font-medium animate-pulse border border-red-700">
+                          New
+                        </span>
+                      ) : null}
+                    </div>
+
+                    {/* Details Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-sm">
+                      <div>
+                        <p className="text-slate-400 font-medium">Client</p>
+                        <p className="text-white font-inter">{booking.customerName}</p>
+                        <p className="text-slate-300">{booking.phone}</p>
+                      </div>
+                      <div>
+                        <p className="text-slate-400 font-medium">Program</p>
+                        <p className="text-white font-inter">
+                          {booking.quantity} × {booking.program}
+                        </p>
+                        <p className="text-lg font-bold text-yellow-500 mt-1">
+                          KSh {booking.totalAmount.toLocaleString()}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-slate-400 font-medium">Location</p>
+                        <p className="text-white font-inter">{booking.location || 'Client choice'}</p>
+                      </div>
+                      <div>
+                        <p className="text-slate-400 font-medium">Booked On</p>
+                        <p className="text-white font-inter">{formatDate(booking.bookingDate)}</p>
+                      </div>
+                      {booking.notes && (
+                        <div className="md:col-span-2">
+                          <p className="text-slate-400 font-medium">Notes</p>
+                          <p className="text-white font-inter italic">{booking.notes}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex flex-col gap-3 lg:w-64">
+                    <div className="grid grid-cols-2 gap-3">
+                      <button
+                        onClick={() => sendNotification(booking, 'whatsapp')}
+                        disabled={booking.notificationSent || sendingNotificationId === booking.id}
+                        className="px-4 py-3 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed transition font-poppins flex items-center justify-center gap-2"
+                      >
+                        <i className="ri-whatsapp-line text-lg" />
+                        {sendingNotificationId === booking.id ? 'Opening...' : 'WhatsApp'}
+                      </button>
+                      <button
+                        onClick={() => sendNotification(booking, 'sms')}
+                        disabled={booking.notificationSent || sendingNotificationId === booking.id}
+                        className="px-4 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed transition font-poppins flex items-center justify-center gap-2"
+                      >
+                        <i className="ri-message-3-line text-lg" />
+                        SMS
+                      </button>
+                    </div>
+                    <a
+                      href={`tel:${booking.phone}`}
+                      className="px-4 py-3 bg-yellow-600 text-white rounded-xl font-semibold hover:bg-yellow-700 transition text-center font-poppins flex items-center justify-center gap-2"
+                    >
+                      <i className="ri-phone-line" />
+                      Call Client
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-    
+    </div>
   );
 }

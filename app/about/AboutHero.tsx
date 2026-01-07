@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 export default function AboutHero() {
@@ -6,22 +5,19 @@ export default function AboutHero() {
     <section 
       className="relative h-[90dvh] flex items-center justify-center bg-cover bg-center"
       style={{
-
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/trainer.jpg')`
-
       }}
     >
-      <div className="text-center text-white max-w-4xl px-6">
-        <h1 className="text-5xl md:text-6xl font-bold mb-6">
-          Our Journey
+      <div className="text-center text-textSecondary max-w-3xl px-6">
+        <h1 className="text-4xl md:text-5xl font-bold mb-6 font-poppins">
+          About Fit Hunter
         </h1>
-        <p className="text-xl md:text-2xl mb-8 leading-relaxed">
-          From a passion for coastal fitness in Watamu to empowering hundreds with transformative programs, Fit Hunter is dedicated to your sustainable health through expert guidance and unwavering support.
+        <p className="text-lg md:text-xl mb-8 leading-relaxed font-inter">
+          After adding 50 pound myself, I realized that fitness is about more than just the gym. I decided to help othes to navigate their own transformations with sustainable plans the don&apos;t require to giving up the foods they love.
         </p>
-        <div className="inline-block bg-yellow-600/20 backdrop-blur-sm border border-yellow-400/30 px-8 py-3">
-          <p className="text-yellow-300 text-lg">Preying on fitness goals one rep at a time</p>
+        <div className="inline-block bg-button border border-yellow-400/30 px-6 py-3">
+          <p className="text-white text-xl font-bold font-poppins">Building confidence through fitness, one rep at a time.</p>
         </div>
-        <p className="mt-4">We're committed to building strength, confidence, and wellness in Kenya's tropical paradise.</p>
       </div>
     </section>
   );

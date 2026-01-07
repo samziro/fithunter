@@ -5,36 +5,36 @@ import Image from "next/image";
 
 export default function OurStory() {
   return (
-    <section className="py-20">
-      <div className="max-w-6xl mx-auto px-6">
+    <section className="py-12 bg-lightBg">
+      <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-4xl font-bold text-white mb-6">
-              Rooted in Passion, Driven by Results
+            <h2 className="text-3xl md:text-4xl font-bold text-textSecondary mb-6 font-poppins">
+              TRAINER BIO: Passion for Fitness in Watamu
             </h2>
-            <div className="space-y-6 text-slate-100">
-              <p className="text-lg leading-relaxed">
-                Fit Hunter was founded with a simple vision: to empower individuals in Watamu, Kenya, with transformative fitness programs that blend coastal vibes with expert guidance.
+            <div className="space-y-6 text-textMain font-inter text-base leading-relaxed">
+              <p>
+                I started with a simple goal: Help people get fit and confident through personalized training, meal plans and workouts programs. As a personal trainer, I've built this from passion of fitness.
               </p>
-              <p className="text-lg leading-relaxed">
-                Located in the beautiful coastal region of Watamu, our approach combines years of experience with sustainable practices to deliver personalized training that meets the highest standards of effectiveness and enjoyment.
+              <p>
+                Based in Watamu, I use years of experience to create safe, fun sessions—one-on-one coaching, outdoor training — that deliver real results.
               </p>
-              <p className="text-lg leading-relaxed">
-                Every day, we commit to our motto: "Preying on fitness goals one rep at a time." This isn't just a slogan – it's our promise to you and your wellness journey.
+              <p>
+                TRAINER MOTTO: "Preying on fitness goals, one rep at a time." It's more than words—it's how I support every client's journey to better health.
               </p>
             </div>
-            <div className="mt-8 flex items-center space-x-6">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white">4+</div>
-                <div className="text-sm text-slate-100">Years Experience</div>
+            <div className="mt-8 flex flex-wrap gap-6">
+              <div className="text-center min-w-[80px]">
+                <div className="text-3xl font-bold text-textSecondary font-poppins">5+</div>
+                <div className="text-sm text-textMain font-inter">Years of Experience</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white">100+</div>
-                <div className="text-sm text-slate-100">Happy Clients</div>
+              <div className="text-center min-w-[80px]">
+                <div className="text-3xl font-bold text-textSecondary font-poppins">100+</div>
+                <div className="text-sm text-textMain font-inter">Happy Clients</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-white">100%</div>
-                <div className="text-sm text-slate-100">Personalized</div>
+              <div className="text-center min-w-[80px]">
+                <div className="text-3xl font-bold text-textSecondary font-poppins">100%</div>
+                <div className="text-sm text-textMain font-inter">Personalized Plans</div>
               </div>
             </div>
           </div>
@@ -42,16 +42,17 @@ export default function OurStory() {
             <Image
               width={400}
               height={400}
-              src="/mike.jpg"
-              alt="Fit Hunter trainer in Watamu"
-              className="w-full h-full object-top shadow-xl"
+              src="/mike2.jpeg"
+              alt="Fit Hunter personal trainer leading a session in Watamu, Kenya"
+              className="w-full h-auto object-cover  shadow-xl"
+              loading="lazy"
             />
-            <div className="absolute -bottom-6 -left-6 bg-yellow-600 text-white p-6 shadow-xl">
+            <div className="absolute -bottom-6 -left-6 bg-button text-textMain p-4  shadow-xl">
               <div className="flex items-center space-x-3">
                 <i className="ri-map-pin-line text-2xl"></i>
                 <div>
-                  <div className="font-semibold">Located in</div>
-                  <div className="text-sm">Watamu, Kenya</div>
+                  <div className="font-semibold font-poppins">Based in</div>
+                  <div className="text-sm font-inter">Watamu, Kenya</div>
                 </div>
               </div>
             </div>

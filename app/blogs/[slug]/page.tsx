@@ -8,122 +8,174 @@ interface BlogPost {
   excerpt: string;
   date: string;
   readTime: string;
+  featured_image?: string;
   content: string;
 }
 
 const blogPosts: BlogPost[] = [
   {
     slug: 'beach-workouts-watamu',
-    title: '5 Essential Beach Workouts for Watamu Fitness Enthusiasts',
+    title: '5 Essential Beach Workouts in Watamu',
     excerpt:
-      "Make the most of Watamu's stunning shores with these effective beach workouts. As your personal trainer Watamu, learn sand resistance exercises that build strength naturally.",
+      'Use Watamu’s sand and sea for natural resistance training. These simple exercises build strength, burn fat, and keep you motivated with ocean views.',
     date: 'December 20, 2025',
-    readTime: '5 min read',
+    readTime: '5 min',
+    featured_image: '/mike.jpg',
     content: `
-      <h2>Introduction</h2>
-      <p>Living in Watamu or visiting this coastal paradise? The beach is your ultimate gym. As your personal trainer Watamu, I've designed these 5 workouts that use natural elements like sand and waves to build strength, endurance, and core power.</p>
+      <h2>Why Train on the Beach?</h2>
+      <p>Watamu’s beaches are more than beautiful—they’re a free, natural gym. Soft sand increases resistance, waves add fun cardio, and the ocean breeze keeps you cool. These 5 workouts are perfect for beginners and advanced clients alike.</p>
 
       <h2>1. Sand Squats & Lunges</h2>
-      <p>Squats and lunges in soft sand provide 2-3x more resistance than on solid ground. Do 3 sets of 12-15 reps per leg. Focus on form to maximize glute and quad activation.</p>
+      <p>Do 3 sets of 12–15 reps per leg. The unstable surface fires up glutes, quads, and stabilizers more than gym floors. Keep your chest up and core tight.</p>
 
-      <h2>2. Ocean Sprints</h2>
-      <p>Run along the shoreline in ankle-deep water for high-intensity cardio. Start with 20-second sprints, recover 40 seconds. Repeat 8-10 times. Burns fat and builds explosive power.</p>
+      <h2>2. Shoreline Sprints</h2>
+      <p>Run in shallow water for 20 seconds all-out, walk back to recover. Repeat 8–10 times. Great for fat loss and explosive power.</p>
 
-      <h2>3. Push-Up Variations on Sand</h2>
-      <p>Standard push-ups, diamond, or wide-grip on unstable sand. 3 sets to failure. Engages core and shoulders deeply while reducing joint impact.</p>
+      <h2>3. Push-Up Variations</h2>
+      <p>Standard, wide, or diamond push-ups on sand. 3 sets to near failure. Builds chest, shoulders, and core while being gentle on joints.</p>
 
-      <h2>4. Plank with Hip Dips</h2>
-      <p>Hold plank position and alternate dipping hips side to side. 3 sets of 20 dips per side. Targets obliques and deep core muscles.</p>
+      <h2>4. Plank Hip Dips</h2>
+      <p>Hold plank and slowly dip hips side to side. 3 sets of 20 dips per side. Targets obliques and deep core muscles.</p>
 
       <h2>5. Wave Burpees</h2>
-      <p>Perform burpees timing the jump with incoming waves. 4 sets of 10-12 reps. Combines cardio, strength, and fun coastal energy.</p>
+      <p>Do burpees timed with incoming waves. 4 sets of 10–12 reps. Combines strength, cardio, and pure coastal fun.</p>
 
-      <p>Book a session with your personal trainer Watamu to learn proper form and progressions. Stay hydrated and enjoy Kenya's beautiful coast!</p>
+      <p>Want to learn perfect form and progress safely? Book a session with your personal trainer in Watamu — starting at just KSh 2,000.</p>
     `,
   },
   {
     slug: 'nutrition-kenya-heat',
-    title: "Nutrition Tips for Training in Kenya's Tropical Climate",
+    title: 'Staying Strong in Kenya’s Tropical Heat',
     excerpt:
-      "Stay energized and hydrated during your fitness coaching Kenya sessions. Discover local foods and strategies to perform at your best in the heat.",
+      'Train smarter in tropical weather. Learn local hydration tips, pre-workout meals, and recovery foods to fuel your sessions without fatigue.',
     date: 'December 15, 2025',
-    readTime: '7 min read',
+    readTime: '7 min',
+    featured_image: '/mike.jpg',
     content: `
-      <h2>Why Heat Matters for Training</h2>
-      <p>Watamu's tropical climate increases sweat loss and energy demands. Proper nutrition prevents dehydration, fatigue, and poor recovery during your beach workouts Watamu.</p>
+      <h2>Why Heat Changes Everything</h2>
+      <p>Watamu’s climate means higher sweat rates and faster energy use. Without the right nutrition and hydration, performance drops and recovery slows.</p>
 
-      <h2>Hydration Strategy</h2>
-      <p>Drink 500ml water 2 hours before training, sip 200-300ml every 15-20 minutes during sessions, and rehydrate post-workout. Add coconut water or fresh fruit for electrolytes.</p>
+      <h2>Hydration Rules</h2>
+      <p>Drink 500 ml of water 2 hours before training. Sip 200–300 ml every 15–20 minutes during sessions. Rehydrate afterward with coconut water or fresh fruit juice for natural electrolytes.</p>
 
-      <h2>Pre-Workout Fuel</h2>
-      <p>1-2 hours before: Banana with peanut butter, ugali with vegetables, or chapati with eggs. Focus on carbs for energy and protein for muscle protection.</p>
+      <h2>Pre-Workout Fuel (1–2 hours before)</h2>
+      <p>Choose easy-to-digest carbs + some protein: banana with peanut butter, chapati with eggs, or ugali with vegetables. Avoid heavy fried foods.</p>
 
-      <h2>Post-Workout Recovery</h2>
-      <p>Within 30-60 minutes: Mango or pineapple with yogurt, or grilled fish with rice. Aim for 20-30g protein and carbs to replenish glycogen and repair muscles.</p>
+      <h2>Post-Workout Recovery (within 30–60 min)</h2>
+      <p>Combine carbs + protein: mango or pineapple with yogurt, grilled fish with rice, or beans with avocado. Aim for 20–30 g protein to repair muscle.</p>
 
-      <h2>Daily Nutrition Tips</h2>
+      <h2>Daily Habits That Help</h2>
       <ul>
-        <li>Include local superfoods: Avocado, mango, passion fruit, beans, and fish</li>
-        <li>Eat small frequent meals to maintain energy</li>
-        <li>Limit heavy fried foods before training</li>
-        <li>Supplement with electrolytes if sweating heavily</li>
+        <li>Eat local superfoods: avocado, mango, passion fruit, fish, beans</li>
+        <li>Small, frequent meals to keep energy steady</li>
+        <li>Limit caffeine and alcohol before training</li>
+        <li>Consider electrolyte tabs if sweating heavily</li>
       </ul>
 
-      <p>Your personal trainer Watamu can customize a nutrition plan to complement your KES 2000 training program. Stay strong in Kenya's heat!</p>
+      <p>Need a nutrition plan tailored to your training and Watamu lifestyle? Let’s build one together during your next session.</p>
     `,
   },
   {
     slug: 'beginner-personal-training',
     title: "Beginner's Guide to Starting Personal Training in Watamu",
     excerpt:
-      "New to fitness? Your personal trainer Watamu shares how to begin your journey with affordable programs at KES 2000, from goal setting to first sessions.",
+      'New to fitness? Learn how to begin safely and affordably with your personal trainer in Watamu — from goal setting to your first session.',
     date: 'December 10, 2025',
-    readTime: '6 min read',
+    readTime: '6 min',
+    featured_image: '/mike.jpg',
     content: `
-      <h2>Step 1: Set Clear Goals</h2>
-      <p>Whether losing weight, building muscle, or improving energy, define specific, measurable goals. Your personal trainer Watamu will help refine them.</p>
+      <h2>Step 1: Define Your Goals</h2>
+      <p>Be clear: lose fat, gain strength, improve energy, or prepare for an event? Specific goals help your trainer create the right plan.</p>
 
-      <h2>Step 2: Choose the Right Program</h2>
-      <p>At KES 2000 per session or package, start with one-on-one personal training or defined abs routines. Beach workouts Watamu make learning fun.</p>
+      <h2>Step 2: Choose Your Starting Point</h2>
+      <p>One-on-one sessions (KSh 2,000) or group classes are great for beginners. Beach workouts in Watamu make learning enjoyable and effective.</p>
 
-      <h2>Step 3: Prepare for Your First Session</h2>
-      <p>Wear comfortable clothes, bring water, and arrive 10 minutes early. Share health history and goals with your trainer.</p>
+      <h2>Step 3: Prepare for Day One</h2>
+      <p>Wear comfortable clothes and shoes. Bring water. Arrive 10 minutes early. Tell your trainer about any injuries or health conditions.</p>
 
-      <h2>Step 4: What to Expect</h2>
-      <p>Assessment, warm-up, main workout, cool-down. Focus on form and breathing. You'll feel challenged but supported.</p>
+      <h2>Step 4: What Happens in Your First Session</h2>
+      <p>Short assessment → warm-up → main workout → cool-down. Focus is on form and breathing. You’ll feel challenged but supported.</p>
 
-      <h2>Step 5: Stay Consistent</h2>
-      <p>Commit to 2-3 sessions weekly. Track progress and adjust with your trainer. Results come from consistency.</p>
+      <h2>Step 5: Build the Habit</h2>
+      <p>Commit to 2–3 sessions per week. Track progress. Adjust with your trainer. Consistency turns small steps into big changes.</p>
 
-      <p>Ready to start? Book a free consultation with Fit Hunter today. Your transformation begins with that first step!</p>
+      <p>Ready to take the first step? Book a free consultation with Fit Hunter today — no pressure, just real guidance.</p>
     `,
   },
 ];
 
-export default function Page({ params }: { params: { slug: string } }) {
+export default function BlogPostPage({ params }: { params: { slug: string } }) {
   const post = blogPosts.find((p) => p.slug === params.slug);
 
   if (!post) {
-    return notFound();
+    notFound();
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-24">
+    <div className="min-h-screen bg-[#292929] py-24">
       <div className="max-w-4xl mx-auto px-6">
-        <Link href="/blogs" className="text-blue-600 mb-6 inline-block">
+        {/* Back button */}
+        <Link
+          href="/blogs"
+          className="inline-flex items-center text-yellow-500 hover:text-yellow-400 text-sm md:text-base font-medium mb-8 transition-colors font-inter"
+        >
           ← Back to Blog
         </Link>
 
-        <article className="bg-white rounded-2xl shadow-lg overflow-hidden p-8">
-          <div className="mb-6">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">{post.title}</h1>
-            <p className="text-sm text-gray-500">{post.date} • {post.readTime}</p>
-          </div>
+        {/* Article */}
+        <article className="bg-[#4a4a4a] rounded-xl shadow-2xl overflow-hidden">
+          {/* Featured Image */}
+          {post.featured_image && (
+            <div className="relative aspect-video">
+              <Image
+                src={post.featured_image}
+                alt={post.title}
+                fill
+                className="object-cover object-center"
+                priority
+                sizes="(max-width: 1024px) 100vw, 800px"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+              <div className="absolute bottom-6 left-6 text-white">
+                <h1 className="text-3xl md:text-4xl font-bold font-poppins mb-3 drop-shadow-lg">
+                  {post.title}
+                </h1>
+                <p className="text-base font-inter text-slate-200 drop-shadow-md">
+                  {post.date} • {post.readTime}
+                </p>
+              </div>
+            </div>
+          )}
 
-          <div className="prose max-w-none">
-            <div dangerouslySetInnerHTML={{ __html: post.content }} />
+          {/* Content */}
+          <div className="p-8 md:p-12">
+            <div
+              className="prose prose-invert prose-yellow max-w-none font-inter text-slate-200 leading-relaxed prose-headings:font-poppins prose-headings:text-white prose-a:text-yellow-400 prose-a:no-underline hover:prose-a:underline"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
           </div>
         </article>
+
+        {/* CTA at bottom */}
+        <div className="mt-16 text-center">
+          <p className="text-slate-300 font-inter text-lg mb-6">
+            Ready to put these tips into action?
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/programs"
+              className="bg-yellow-600 text-white px-8 py-4 rounded-md font-semibold hover:bg-yellow-700 transition-colors font-poppins"
+            >
+              Book a Session
+            </Link>
+            <Link
+              href="/contact"
+              className="border-2 border-white text-white px-8 py-4 rounded-md font-semibold hover:bg-white hover:text-[#292929] transition-colors font-poppins"
+            >
+              Free Consultation
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );
