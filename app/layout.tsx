@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   keywords: [
     "personal trainer Watamu",
     "fitness coach Kenya",
-    "beach workouts Watamu",
+    "fitness trainer Watamu",
     "personal training Kilifi",
     "online fitness coaching Kenya",
     "strength training Watamu",
@@ -124,7 +124,7 @@ export default function RootLayout({
                 addressCountry: "KE",
               },
               image: "/logo.jpg",
-              priceRange: "KSh 2,000 - KSh 55,500",
+              priceRange: "KSh 3,000 - KSh 55,500",
               sameAs: [
                 "https://www.youtube.com/@the.fit.hunter",
                 "https://www.facebook.com/share/19vKATkcoR/?mibextid=wwXIfr",
@@ -143,7 +143,7 @@ export default function RootLayout({
                   offers: {
                     "@type": "Offer",
                     priceCurrency: "KES",
-                    price: "2000",
+                    price: "3000",
                     availability: "https://schema.org/InStock",
                   },
                 },

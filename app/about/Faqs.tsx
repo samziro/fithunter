@@ -17,7 +17,7 @@ const faqs: Faq[] = [
   {
     question: 'How much do the programs cost?',
     answer:
-      'Prices vary by type: One-on-one sessions start at KSh 4,500, nutrition guidance at ksh 11,500, workout programs at ksh 3,000 per month and online packages from KSh 2,500 per session. Contact me for custom quotes.',
+      'Prices vary by type: One-on-one sessions start at KSh 3,500, nutrition guidance at ksh 11,500, workout programs at ksh 3,000 per month and online packages from KSh 3,000 per session. Contact me for custom quotes.',
   },
   {
     question: 'Where are the sessions held?',
