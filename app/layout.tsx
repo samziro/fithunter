@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     siteName: "Fit Hunter",
     images: [
       {
-        url: "/og-logo.jpg",
+        url: "/logo.png",
         width: 1200,
         height: 630,
         alt: "Fit Hunter personal trainer in Watamu, Kenya",
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     title: "Personal Trainer Watamu | Fit Hunter",
     description:
       "Professional trainer offering affordable workout programs, meal plans and custom fitness plans in Watamu, Kenya.",
-    images: ["/og-logo.jpg"],
+    images: ["/logo.png"],
     creator: "@The_Fithunter",
   },
   robots: {
@@ -100,7 +100,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         {/* Favicon & App Icons */}
-        <link rel="icon" href="/favicon.png" />
+        <link rel="icon" href="/logo.png" />
         <link rel="apple-touch-icon" href="/logo.png" />
         <link rel="manifest" href="/site.webmanifest" />
 
@@ -123,7 +123,7 @@ export default function RootLayout({
                 postalCode: "80202",
                 addressCountry: "KE",
               },
-              image: "/logo.jpg",
+              image: "/logo.png",
               priceRange: "KSh 3,000 - KSh 55,500",
               sameAs: [
                 "https://www.youtube.com/@the.fit.hunter",
@@ -137,7 +137,7 @@ export default function RootLayout({
                 itemOffered: {
                   "@type": "Service",
                   name: "Personal Training Session",
-                  image: "/logo.jpg",
+                  image: "/logo.png",
                   description: "Professional personal training sessions in Watamu, Kenya.",
                   brand: { "@type": "Brand", name: "Fit Hunter - Personal Trainer Watamu" },
                   offers: {
