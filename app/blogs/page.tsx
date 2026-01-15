@@ -87,7 +87,7 @@ export default async function BlogPage() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-16">
           <div className='flex items-center justify-between'>
-            <h1 className="text-4xl md:text-5xl font-bold text-textSecondary mb-4 font-poppins">
+            <h1 className="text-xl md:text-5xl font-bold text-textSecondary mb-4 font-poppins">
             Fit Hunter Blog
           </h1>
           <Link href={"/"} className="bg-button text-sm md:text-base px-8 py-3 text-textSecondary font-medium transition-colors font-inter">
