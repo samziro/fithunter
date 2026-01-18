@@ -78,7 +78,7 @@ export default function ProgramPage() {
               onClick={handleBuyClick}
             />
             <PackageCard
-              title="Diamomd Package"
+              title="Diamond Package"
               price="KSh 55,500"
               features={["15 sessions", "Save 18%", "Meal plan", "Personal workouts", "Progress tracking"]}
               badge="Best Value"
